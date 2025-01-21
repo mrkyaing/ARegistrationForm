@@ -1,5 +1,4 @@
-# ARegistrationForm
-An Overview of the Programming Exam
+# An Overview of the Programming Exam
 Contents:
 ∙ The aim of the exam is to finish the specified interface and it’s programming.
 ∙ The candidate can use any programming language he or she seems fit.
