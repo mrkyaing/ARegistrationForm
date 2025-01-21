@@ -1,0 +1,58 @@
+﻿@model IList<RegistrationProcessForm.Models.RegisterModel>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<h1>Registration List Information</h1>
+@{
+    int index = 1;
+    ViewData["Title"] = "List";
+}
+<div class="mb-4">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Employee ID</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr id="row-@item.EmployeeID">
+                    <td>@index</td>
+                    <td>@item.EmployeeID</td>
+                    <td>@item.Name</td>
+                    <td>@item.Phone</td>
+                    <td>
+                        <a href="@Url.Action("Edit", "Register", new { id = item.EmployeeID })" class="btn btn-primary btn-sm">Edit</a>
+                        <button class="btn btn-danger btn-sm" onclick="deleteByEmployeeId('@item.EmployeeID')">Delete</button>
+                        </td>
+                </tr>
+                index++;
+            }
+        </tbody>
+    </table>
+</div>
+<script>
+    function deleteByEmployeeId(employeeId){
+        if (confirm("Are you sure you want to delete this employee?")) {
+                $.ajax({
+                    url: '/register/delete',
+                    type: 'DELETE',
+                    data: { id: employeeId },
+                    success: function (response) {
+                        if (response.success) {
+                            alert(response.message);
+                            $('#row-' + employeeId).remove();
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function () {
+                        alert("An error occurred while deleting the employee.");
+                    }
+                });
+            }
+    }
+</script>
